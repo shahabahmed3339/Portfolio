@@ -11,7 +11,7 @@ export default function ContactSection() {
                     </tr>
                     <tr>
                         <td className="pr-4 py-2">Phone:</td>
-                        <td className="py-2 text-gray-500">+92 315 1586289 &nbsp; +92 330 1573989</td>
+                        <td className="py-2 text-gray-500">+92 315 1586289 &nbsp; | &nbsp; +92 330 1573989</td>
                     </tr>
                 </tbody>
             </table>

@@ -2,17 +2,31 @@ import Section from "../components/section";
 
 export default function SkillsSection() {
     const skills = [
+        "MEAN Stack",
+        "MERN Stack",
+        "Angular",
         "React.js",
         "Next.js",
-        "Tailwind CSS",
-        "TypeScript",
+        "Nest.js",
         "Node.js",
+        "Python",
+        "Flask",
+        "Django",
+        "TypeScript",
+        "JavaScript",
+        "MongoDB",
         "PostgreSQL",
         "MySQL",
+        "PowerBi",
         "Git",
         "HTML",
+        "Tailwind CSS",
+        "Bootstrap CSS",
         "CSS",
-        "JavaScript",
+        "Teamwork",
+        "Problem Solving",
+        "Customer Support",
+        "Critical Thinking",
     ];
 
     return (

@@ -1,30 +1,70 @@
 import Section from "../components/section";
 
 export default function EducationSection() {
+    const education = [
+        {
+            image: "/assets/hitec.png",
+            title: "Masters of Science in Computer Science",
+            institute: "HITEC University",
+            location: "Taxila, Pakistan",
+            start: "Sep 2020",
+            end: "Jan 2023",
+            cgpa: "3.80 / 4.00",
+            thesis: "Human Action Recognition: A Fused Framework of Pre -trained DarkNet -19 and SqueezeNet Deep Models",
+        },
+        {
+            image: "/assets/hitec.png",
+            title: "Bachelors of Science in Computer Engineering",
+            institute: "HITEC University",
+            location: "Taxila, Pakistan",
+            start: "Sep 2016",
+            end: "Jul 2020",
+            cgpa: "3.62 / 4.00",
+            thesis: "Implementation of Correlation Filters on DSP Processor for Real-time Applications",
+        },
+    ];
+
     return (
         <Section title="Education">
-            <div className="w-full border border-gray-200 p-6 rounded-xl">
-                <div className="flex flex-col md:flex-row items-start gap-3 md:items-center justify-between w-full text-gray-500">
-                    <div className="flex flex-col md:flex-row items-start md:items-center gap-3">
-                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
-                            <img
-                                src="/assets/education-image-1.png"
-                                alt="Education"
-                                width={25}
-                                height={25}
-                                className="size-5.5"
-                            />
+            <div className="w-full space-y-6">
+                {education.map((education) => (
+                    <div key={education.title} className="w-full border border-gray-200 p-6 rounded-xl">
+                        <div className="flex flex-col md:flex-row items-start gap-3 md:items-center justify-between w-full text-gray-500">
+                            <div className="flex flex-col md:flex-row items-start md:items-center gap-3">
+                                <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                                    <img
+                                        src={education.image}
+                                        alt={education.title}
+                                        width={25}
+                                        height={25}
+                                    />
+                                </div>
+                                <div>
+                                    <h3 className="text-base font-medium text-gray-800">
+                                        {education.title}
+                                    </h3>
+                                    <div>{education.institute}</div>
+                                </div>
+                            </div>
+                            <div className="flex flex-col md:flex-col items-start md:items-end gap-2">
+                                <div>{education.start} - {education.end}</div>
+                                <div className="text-xs">{education.location}</div>
+                            </div>
                         </div>
-                        <div>
+                        <div className="mt-6 text-gray-500">
                             <h3 className="text-base font-medium text-gray-800">
-                                Bachelor in Computer Science
+                                CGPA:
                             </h3>
-                            <div>Whiting School of Engineering</div>
+                            <div>{education.cgpa}</div>
+                        </div>
+                        <div className="mt-2 text-gray-500">
+                            <h3 className="text-base font-medium text-gray-800">
+                                Thesis:
+                            </h3>
+                            <div>{education.thesis}</div>
                         </div>
                     </div>
-                    <div>Sep 2018 - May 2022</div>
-                </div>
-                <p className="mt-6 text-gray-500">A significant part of the education involves practical experience through labs and projects, which are designed to enhance problem-solving skills</p>
+                ))}
             </div>
         </Section>
     );
