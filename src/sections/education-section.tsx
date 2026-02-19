@@ -26,7 +26,7 @@ export default function EducationSection() {
 
     return (
         <Section title="Education">
-            <div className="w-full space-y-6">
+            <div className="w-full space-y-2">
                 {education.map((education) => (
                     <div key={education.title} className="w-full border border-gray-200 p-6 rounded-xl">
                         <div className="flex flex-col md:flex-row items-start gap-3 md:items-center justify-between w-full text-gray-500">
@@ -51,13 +51,13 @@ export default function EducationSection() {
                                 <div className="text-xs">{education.location}</div>
                             </div>
                         </div>
-                        <div className="mt-6 text-gray-500">
+                        <div className="flex flex-row items-center gap-3 mt-2 text-gray-500">
                             <h3 className="text-base font-medium text-gray-800">
                                 CGPA:
                             </h3>
                             <div>{education.cgpa}</div>
                         </div>
-                        <div className="mt-2 text-gray-500">
+                        <div className="flex flex-row items-center gap-2 text-gray-500">
                             <h3 className="text-base font-medium text-gray-800">
                                 Thesis:
                             </h3>

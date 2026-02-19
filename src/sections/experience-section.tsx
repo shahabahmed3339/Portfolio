@@ -50,7 +50,7 @@ export default function ExperienceSection() {
 
     return (
         <Section title="Experience">
-            <div className="w-full space-y-6">
+            <div className="w-full space-y-2">
                 {experience.map((experience) => (
                     <div key={experience.title} className="w-full border border-gray-200 p-6 rounded-xl">
                         <div className="flex flex-col md:flex-row items-start gap-3 md:items-center justify-between w-full text-gray-500">

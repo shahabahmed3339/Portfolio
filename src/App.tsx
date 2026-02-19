@@ -57,7 +57,7 @@ export default function App() {
     };
 
     return (
-        <main className="max-md:px-4 lg:px-100">
+        <main className="max-md:px-4 print-padding">
             <LenisScroll />
             <ScrollToTop />
             <div ref={printRef}>
