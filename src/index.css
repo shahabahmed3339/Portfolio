@@ -15,9 +15,3 @@
         @apply cursor-pointer;
     }
 }
-
-@media screen and (min-width: 1900px) {
-    .print-padding {
-        padding-inline: calc(var(--spacing) * 100);
-    }
-}

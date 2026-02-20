@@ -11,11 +11,16 @@ import HeroSection from "./sections/hero-section";
 // import ProjectsSection from "./sections/projects-section";
 import SkillsSection from "./sections/skills-section";
 import ScrollToTop from './components/scroll-to-top';
+import Navbar from './components/navbar';
 
 export default function App() {
+    const aboutRef = useRef<HTMLDivElement | null>(null);
+    const experienceRef = useRef<HTMLDivElement | null>(null);
+    const educationRef = useRef<HTMLDivElement | null>(null);
+    const skillsRef = useRef<HTMLDivElement | null>(null);
+    const projectsRef = useRef<HTMLDivElement | null>(null);
     const contactRef = useRef<HTMLDivElement | null>(null);
     const printRef = useRef<HTMLDivElement | null>(null);
-    const [isDownloading, setIsDownloading] = useState(false);
 
     const handleDownloadPdf = async () => {
         if (!printRef.current) {
@@ -23,59 +28,201 @@ export default function App() {
             return;
         }
 
-        setIsDownloading(true);
-        setTimeout(async () => {
-            try {
-                const element = printRef.current;
-                const canvas = await html2canvas(element!, { scale: 2 });
-                const imgData = canvas.toDataURL("image/png");
+        try {
+            const pdf = new jsPDF("p", "px", "a4");
 
-                const pdf = new jsPDF("p", "mm", "a4");
-                const imgProps = pdf.getImageProperties(imgData);
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            const margin = 20;
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+            const usableWidth = pageWidth - margin * 2;
+            const usableHeight = pageHeight - margin;
 
-                let heightLeft = pdfHeight;
-                let position = 0;
+            let currentY = margin;
 
-                pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
-                heightLeft -= pdf.internal.pageSize.getHeight();
+            const sections = printRef.current.querySelectorAll(".pdf-section");
 
-                while (heightLeft > 0) {
-                    position = heightLeft - pdfHeight;
-                    pdf.addPage();
-                    pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
-                    heightLeft -= pdf.internal.pageSize.getHeight();
+            for (const section of sections) {
+
+                const childSections = section.querySelectorAll(".child-pdf-section");
+
+                // 🔹 If no child sections → treat whole section normally
+                if (childSections.length === 0) {
+
+                    const canvas = await html2canvas(section as HTMLElement, { scale: 2 });
+                    const scale = usableWidth / canvas.width;
+                    const sectionHeight = canvas.height * scale;
+
+                    if (currentY + sectionHeight > usableHeight) {
+                        pdf.addPage();
+                        currentY = margin;
+                    }
+
+                    pdf.addImage(
+                        canvas.toDataURL("image/png"),
+                        "PNG",
+                        margin,
+                        currentY,
+                        usableWidth,
+                        sectionHeight
+                    );
+
+                    currentY += sectionHeight + 10;
                 }
 
-                pdf.save("portfolio.pdf");
-            } catch (err) {
-                console.error(err);
+                // 🔹 If child sections exist → paginate by child
+                else {
+                    const titleElement = section.querySelector(".section-title");
+
+                    // Get first child if exists
+                    const firstChild = childSections[0] as HTMLElement | undefined;
+
+                    if (titleElement && firstChild) {
+                        // Render both to canvas first to measure their heights
+                        const titleCanvas = await html2canvas(titleElement as HTMLElement, { scale: 2 });
+                        const firstChildCanvas = await html2canvas(firstChild, { scale: 2 });
+
+                        const titleScale = usableWidth / titleCanvas.width;
+                        const titleHeight = titleCanvas.height * titleScale;
+
+                        const childScale = usableWidth / firstChildCanvas.width;
+                        const firstChildHeight = firstChildCanvas.height * childScale;
+
+                        // If they don't fit on the current page, start a new page
+                        if (currentY + titleHeight + firstChildHeight > usableHeight) {
+                            pdf.addPage();
+                            currentY = margin;
+                        }
+
+                        // 🔹 Render title
+                        pdf.addImage(
+                            titleCanvas.toDataURL("image/png"),
+                            "PNG",
+                            margin,
+                            currentY,
+                            usableWidth,
+                            titleHeight
+                        );
+                        currentY += titleHeight + 5;
+
+                        // 🔹 Render first child
+                        pdf.addImage(
+                            firstChildCanvas.toDataURL("image/png"),
+                            "PNG",
+                            margin,
+                            currentY,
+                            usableWidth,
+                            firstChildHeight
+                        );
+                        currentY += firstChildHeight + 10;
+
+                        // 🔹 Render remaining children (if any)
+                        for (let i = 1; i < childSections.length; i++) {
+                            const child = childSections[i] as HTMLElement;
+                            const canvas = await html2canvas(child, { scale: 2 });
+                            const scale = usableWidth / canvas.width;
+                            const childHeight = canvas.height * scale;
+
+                            if (currentY + childHeight > usableHeight) {
+                                pdf.addPage();
+                                currentY = margin;
+                            }
+
+                            pdf.addImage(
+                                canvas.toDataURL("image/png"),
+                                "PNG",
+                                margin,
+                                currentY,
+                                usableWidth,
+                                childHeight
+                            );
+
+                            currentY += childHeight + 10;
+                        }
+                    } else {
+                        // Fallback if no title or no children
+                        for (const child of childSections) {
+                            const canvas = await html2canvas(child as HTMLElement, { scale: 2 });
+                            const scale = usableWidth / canvas.width;
+                            const childHeight = canvas.height * scale;
+
+                            if (currentY + childHeight > usableHeight) {
+                                pdf.addPage();
+                                currentY = margin;
+                            }
+
+                            pdf.addImage(
+                                canvas.toDataURL("image/png"),
+                                "PNG",
+                                margin,
+                                currentY,
+                                usableWidth,
+                                childHeight
+                            );
+
+                            currentY += childHeight + 10;
+                        }
+                    }
+                }
             }
-            setIsDownloading(false);
-        }, 0);
+
+            pdf.save("portfolio.pdf");
+
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     return (
-        <main className="max-md:px-4 print-padding">
-            <LenisScroll />
-            <ScrollToTop />
-            <div ref={printRef}>
-                <HeroSection
-                    onContactClick={() => contactRef.current?.scrollIntoView({ behavior: "smooth" })}
-                    onDownloadClick={handleDownloadPdf}
-                    isDownloading={isDownloading}
-                />
-                <AboutSection />
-                <ExperienceSection />
-                <EducationSection />
-                {/* <ProjectsSection /> */}
-                <SkillsSection />
+        <>
+            {/* Full-page video background */}
+            {/* <video
+                autoPlay
+                loop
+                muted
+                className="fixed top-0 left-0 w-full h-full object-cover -z-20"
+            >
+                <source src="/assets/background-video.mov" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+            <div className="fixed top-0 left-0 w-full h-full bg-black/30 -z-10"></div> */}
+
+            <Navbar
+                onAboutClick={() => aboutRef.current?.scrollIntoView({ behavior: "smooth" })}
+                onExperienceClick={() => experienceRef.current?.scrollIntoView({ behavior: "smooth" })}
+                onEducationClick={() => educationRef.current?.scrollIntoView({ behavior: "smooth" })}
+                onProjectsClick={() => projectsRef.current?.scrollIntoView({ behavior: "smooth" })}
+                onSkillsClick={() => skillsRef.current?.scrollIntoView({ behavior: "smooth" })}
+                onContactClick={() => contactRef.current?.scrollIntoView({ behavior: "smooth" })}
+                onDownloadClick={handleDownloadPdf}
+            />
+            <main className="pt-24 max-md:px-4 md:w-[950px] md:max-w-[950px] mx-auto">
+                <LenisScroll />
+                <ScrollToTop />
+                <div ref={printRef}>
+                    <div>
+                        <HeroSection />
+                    </div>
+                    <div ref={aboutRef}>
+                        <AboutSection />
+                    </div>
+                    <div ref={experienceRef}>
+                        <ExperienceSection />
+                    </div>
+                    <div ref={educationRef}>
+                        <EducationSection />
+                    </div>
+                    {/* <div ref={projectsRef}>
+                        <ProjectsSection />
+                    </div> */}
+                    <div ref={skillsRef}>
+                        <SkillsSection />
+                    </div>
+                </div>
                 <div ref={contactRef}>
                     <ContactSection />
                 </div>
-            </div>
-            <Footer />
-        </main>
+                <Footer />
+            </main>
+        </>
     )
 }
