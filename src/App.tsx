@@ -1,26 +1,39 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import html2canvas from 'html2canvas-pro';
 import jsPDF from "jspdf";
 import Footer from "./components/footer";
 import LenisScroll from "./components/lenis";
 import AboutSection from "./sections/about-section";
-import ContactSection from "./sections/contact-section";
 import EducationSection from "./sections/education-section";
 import ExperienceSection from "./sections/experience-section";
 import HeroSection from "./sections/hero-section";
-// import ProjectsSection from "./sections/projects-section";
+import ProjectsSection from "./sections/projects-section";
 import SkillsSection from "./sections/skills-section";
 import ScrollToTop from './components/scroll-to-top';
 import Navbar from './components/navbar';
+import * as data from './data.json';
 
 export default function App() {
     const aboutRef = useRef<HTMLDivElement | null>(null);
     const experienceRef = useRef<HTMLDivElement | null>(null);
     const educationRef = useRef<HTMLDivElement | null>(null);
-    const skillsRef = useRef<HTMLDivElement | null>(null);
     const projectsRef = useRef<HTMLDivElement | null>(null);
-    const contactRef = useRef<HTMLDivElement | null>(null);
+    const skillsRef = useRef<HTMLDivElement | null>(null);
+    const languagesRef = useRef<HTMLDivElement | null>(null);
     const printRef = useRef<HTMLDivElement | null>(null);
+
+    const scrollToView = (element: HTMLElement) => {
+        if (!element) return;
+
+        const rect = element.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const elementMiddle = rect.top + scrollTop - window.innerHeight / 2;
+
+        window.scrollTo({
+            top: elementMiddle,
+            behavior: 'smooth',
+        });
+    };
 
     const handleDownloadPdf = async () => {
         if (!printRef.current) {
@@ -165,7 +178,7 @@ export default function App() {
                 }
             }
 
-            pdf.save("portfolio.pdf");
+            pdf.save(`${data.head.name} Résumé.pdf`);
 
         } catch (err) {
             console.error(err);
@@ -181,44 +194,44 @@ export default function App() {
                 muted
                 className="fixed top-0 left-0 w-full h-full object-cover -z-20"
             >
-                <source src="/assets/background-video.mov" type="video/mp4" />
+                <source src={data.backgroundVideo} type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
             <div className="fixed top-0 left-0 w-full h-full bg-black/30 -z-10"></div>
 
             <Navbar
-                onAboutClick={() => aboutRef.current?.scrollIntoView({ behavior: "smooth" })}
-                onExperienceClick={() => experienceRef.current?.scrollIntoView({ behavior: "smooth" })}
-                onEducationClick={() => educationRef.current?.scrollIntoView({ behavior: "smooth" })}
-                onProjectsClick={() => projectsRef.current?.scrollIntoView({ behavior: "smooth" })}
-                onSkillsClick={() => skillsRef.current?.scrollIntoView({ behavior: "smooth" })}
-                onContactClick={() => contactRef.current?.scrollIntoView({ behavior: "smooth" })}
+                onAboutClick={() => scrollToView(aboutRef.current!)}
+                onExperienceClick={() => scrollToView(experienceRef.current!)}
+                onEducationClick={() => scrollToView(educationRef.current!)}
+                onProjectsClick={() => scrollToView(projectsRef.current!)}
+                onSkillsClick={() => scrollToView(skillsRef.current!)}
+                onLanguagesClick={() => scrollToView(languagesRef.current!)}
                 onDownloadClick={handleDownloadPdf}
             />
             <main className="mt-20 mb-2 p-5 max-md:px-4 md:w-[1000px] md:max-w-[1000px] mx-auto bg-white shadow-sm z-50 border border-gray-200 rounded-xl">
                 <LenisScroll />
                 <div ref={printRef}>
                     <div>
-                        <HeroSection />
+                        <HeroSection {...data.head} />
                     </div>
                     <div ref={aboutRef}>
-                        <AboutSection />
+                        <AboutSection about={data.about} />
                     </div>
                     <div ref={experienceRef}>
-                        <ExperienceSection />
+                        <ExperienceSection experience={data.experience} />
                     </div>
                     <div ref={educationRef}>
-                        <EducationSection />
+                        <EducationSection education={data.education} />
                     </div>
-                    {/* <div ref={projectsRef}>
-                        <ProjectsSection />
-                    </div> */}
+                    <div ref={projectsRef}>
+                        <ProjectsSection projects={data.projects} />
+                    </div>
                     <div ref={skillsRef}>
-                        <SkillsSection />
+                        <SkillsSection title="Skills" skills={data.skills} />
                     </div>
-                </div>
-                <div ref={contactRef}>
-                    <ContactSection />
+                    <div ref={languagesRef}>
+                        <SkillsSection title="Languages" skills={data.languages} />
+                    </div>
                 </div>
                 <Footer />
             </main>

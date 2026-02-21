@@ -1,28 +1,10 @@
 import Section from "../components/section";
 
-export default function EducationSection() {
-    const education = [
-        {
-            image: "/assets/hitec.png",
-            title: "Masters of Science in Computer Science",
-            institute: "HITEC University",
-            location: "Taxila, Pakistan",
-            start: "Sep 2020",
-            end: "Jan 2023",
-            cgpa: "3.80 / 4.00",
-            thesis: "Human Action Recognition: A Fused Framework of Pre -trained DarkNet -19 and SqueezeNet Deep Models",
-        },
-        {
-            image: "/assets/hitec.png",
-            title: "Bachelors of Science in Computer Engineering",
-            institute: "HITEC University",
-            location: "Taxila, Pakistan",
-            start: "Sep 2016",
-            end: "Jul 2020",
-            cgpa: "3.62 / 4.00",
-            thesis: "Implementation of Correlation Filters on DSP Processor for Real-time Applications",
-        },
-    ];
+interface EducationProps {
+    education: any[];
+}
+
+export default function EducationSection({ education }: EducationProps) {
 
     return (
         <Section title="Education">

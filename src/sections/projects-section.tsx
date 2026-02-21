@@ -1,18 +1,10 @@
 import Section from "../components/section";
 
-export default function ProjectsSection() {
-    const projects = [
-        {
-            title: "Marketplace",
-            description: "E-commerce web app",
-            image: "/assets/project-1.png",
-        },
-        {
-            title: "Navigator",
-            description: "Navigation app design",
-            image: "/assets/project-2.png",
-        },
-    ];
+interface ProjectsProps {
+    projects: any[];
+}
+
+export default function ProjectsSection({ projects }: ProjectsProps) {
 
     return (
         <Section title="Projects">
