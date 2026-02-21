@@ -210,7 +210,7 @@ export default function App() {
                 onLanguagesClick={() => scrollToView(languagesRef.current!)}
                 onDownloadClick={handleDownloadPdf}
             />
-            <main className="mt-20 mb-2 p-5 max-md:px-4 md:w-[1000px] md:max-w-[1000px] mx-auto bg-white shadow-sm z-50 border border-gray-200 rounded-xl">
+            <main className="mt-22 mb-2 p-5 max-md:px-4 md:w-[1000px] md:max-w-[1000px] mx-auto bg-white shadow-sm z-50 border border-gray-200 rounded-xl">
                 <LenisScroll />
                 <div ref={printRef}>
                     <div>

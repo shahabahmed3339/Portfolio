@@ -48,7 +48,9 @@ export default function Navbar({
                     <button onClick={onSkillsClick}>Skills</button>
                     <button onClick={onInterestsClick}>Interests</button>
                     <button onClick={onLanguagesClick}>Lanugages</button>
-                    <button onClick={onDownloadClick}>Download Résumé</button>
+                    <button className="group bg-indigo-600 hover:bg-indigo-700 text-white px-7 py-2.5 rounded-lg" onClick={onDownloadClick}>
+                        Résumé
+                    </button>
                 </div>
 
                 {/* Mobile Button */}
@@ -62,7 +64,7 @@ export default function Navbar({
 
             {/* Mobile Menu */}
             {isOpen && (
-                <div className="md:hidden bg-white backdrop-blur-md shadow-sm z-50 px-4 pb-4 mt-5 flex flex-col gap-4 text-sm font-medium">
+                <div className="md:hidden bg-white backdrop-blur-md shadow-sm z-50 px-4 pb-4 mt-5 flex flex-col gap-4 text-sm font-medium border border-gray-200 rounded-xl">
                     <button onClick={() => handleClick(onAboutClick)}>About</button>
                     <button onClick={() => handleClick(onExperienceClick)}>Experience</button>
                     <button onClick={() => handleClick(onEducationClick)}>Education</button>
@@ -70,7 +72,9 @@ export default function Navbar({
                     <button onClick={() => handleClick(onSkillsClick)}>Skills</button>
                     <button onClick={() => handleClick(onInterestsClick)}>Interests</button>
                     <button onClick={() => handleClick(onLanguagesClick)}>Lanugages</button>
-                    <button onClick={() => handleClick(onDownloadClick)}>Download Résumé</button>
+                    <button className="group bg-indigo-600 hover:bg-indigo-700 text-white px-7 py-2.5 rounded-lg" onClick={() => handleClick(onDownloadClick)}>
+                        Résumé
+                    </button>
                 </div>
             )}
         </nav>
