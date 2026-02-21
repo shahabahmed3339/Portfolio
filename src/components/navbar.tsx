@@ -8,6 +8,7 @@ interface NavbarProps {
     onEducationClick: () => void;
     onProjectsClick: () => void;
     onSkillsClick: () => void;
+    onInterestsClick: () => void;
     onLanguagesClick: () => void;
     onDownloadClick: () => void;
 }
@@ -18,6 +19,7 @@ export default function Navbar({
     onEducationClick,
     onProjectsClick,
     onSkillsClick,
+    onInterestsClick,
     onLanguagesClick,
     onDownloadClick,
 }: NavbarProps) {
@@ -44,6 +46,7 @@ export default function Navbar({
                     <button onClick={onEducationClick}>Education</button>
                     <button onClick={onProjectsClick}>Projects</button>
                     <button onClick={onSkillsClick}>Skills</button>
+                    <button onClick={onInterestsClick}>Interests</button>
                     <button onClick={onLanguagesClick}>Lanugages</button>
                     <button onClick={onDownloadClick}>Download Résumé</button>
                 </div>
@@ -65,6 +68,7 @@ export default function Navbar({
                     <button onClick={() => handleClick(onEducationClick)}>Education</button>
                     <button onClick={() => handleClick(onProjectsClick)}>Projects</button>
                     <button onClick={() => handleClick(onSkillsClick)}>Skills</button>
+                    <button onClick={() => handleClick(onInterestsClick)}>Interests</button>
                     <button onClick={() => handleClick(onLanguagesClick)}>Lanugages</button>
                     <button onClick={() => handleClick(onDownloadClick)}>Download Résumé</button>
                 </div>

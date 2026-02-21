@@ -19,6 +19,7 @@ export default function App() {
     const educationRef = useRef<HTMLDivElement | null>(null);
     const projectsRef = useRef<HTMLDivElement | null>(null);
     const skillsRef = useRef<HTMLDivElement | null>(null);
+    const interestsRef = useRef<HTMLDivElement | null>(null);
     const languagesRef = useRef<HTMLDivElement | null>(null);
     const printRef = useRef<HTMLDivElement | null>(null);
 
@@ -205,6 +206,7 @@ export default function App() {
                 onEducationClick={() => scrollToView(educationRef.current!)}
                 onProjectsClick={() => scrollToView(projectsRef.current!)}
                 onSkillsClick={() => scrollToView(skillsRef.current!)}
+                onInterestsClick={() => scrollToView(interestsRef.current!)}
                 onLanguagesClick={() => scrollToView(languagesRef.current!)}
                 onDownloadClick={handleDownloadPdf}
             />
@@ -228,6 +230,9 @@ export default function App() {
                     </div>
                     <div ref={skillsRef}>
                         <SkillsSection title="Skills" skills={data.skills} />
+                    </div>
+                    <div ref={interestsRef}>
+                        <SkillsSection title="Interests" skills={data.interests} />
                     </div>
                     <div ref={languagesRef}>
                         <SkillsSection title="Languages" skills={data.languages} />
