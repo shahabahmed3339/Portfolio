@@ -175,7 +175,7 @@ export default function App() {
     return (
         <>
             {/* Full-page video background */}
-            {/* <video
+            <video
                 autoPlay
                 loop
                 muted
@@ -184,7 +184,7 @@ export default function App() {
                 <source src="/assets/background-video.mov" type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
-            <div className="fixed top-0 left-0 w-full h-full bg-black/30 -z-10"></div> */}
+            <div className="fixed top-0 left-0 w-full h-full bg-black/30 -z-10"></div>
 
             <Navbar
                 onAboutClick={() => aboutRef.current?.scrollIntoView({ behavior: "smooth" })}
@@ -195,9 +195,8 @@ export default function App() {
                 onContactClick={() => contactRef.current?.scrollIntoView({ behavior: "smooth" })}
                 onDownloadClick={handleDownloadPdf}
             />
-            <main className="pt-24 max-md:px-4 md:w-[950px] md:max-w-[950px] mx-auto">
+            <main className="mt-20 mb-2 p-5 max-md:px-4 md:w-[1000px] md:max-w-[1000px] mx-auto bg-white shadow-sm z-50 border border-gray-200 rounded-xl">
                 <LenisScroll />
-                <ScrollToTop />
                 <div ref={printRef}>
                     <div>
                         <HeroSection />
@@ -223,6 +222,7 @@ export default function App() {
                 </div>
                 <Footer />
             </main>
+            <ScrollToTop />
         </>
     )
 }
