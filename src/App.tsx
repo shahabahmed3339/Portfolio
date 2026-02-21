@@ -58,7 +58,7 @@ export default function App() {
                     }
 
                     pdf.addImage(
-                        canvas.toDataURL("image/png"),
+                        canvas.toDataURL("image/jpeg"),
                         "PNG",
                         margin,
                         currentY,
@@ -95,7 +95,7 @@ export default function App() {
 
                         // 🔹 Render title
                         pdf.addImage(
-                            titleCanvas.toDataURL("image/png"),
+                            titleCanvas.toDataURL("image/jpeg"),
                             "PNG",
                             margin,
                             currentY,
@@ -106,7 +106,7 @@ export default function App() {
 
                         // 🔹 Render first child
                         pdf.addImage(
-                            firstChildCanvas.toDataURL("image/png"),
+                            firstChildCanvas.toDataURL("image/jpeg"),
                             "PNG",
                             margin,
                             currentY,
@@ -128,7 +128,7 @@ export default function App() {
                             }
 
                             pdf.addImage(
-                                canvas.toDataURL("image/png"),
+                                canvas.toDataURL("image/jpeg"),
                                 "PNG",
                                 margin,
                                 currentY,
@@ -151,7 +151,7 @@ export default function App() {
                             }
 
                             pdf.addImage(
-                                canvas.toDataURL("image/png"),
+                                canvas.toDataURL("image/jpeg"),
                                 "PNG",
                                 margin,
                                 currentY,
