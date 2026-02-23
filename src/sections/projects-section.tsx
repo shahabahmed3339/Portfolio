@@ -8,23 +8,25 @@ export default function ProjectsSection({ projects }: ProjectsProps) {
 
     return (
         <Section title="Projects">
-            <div className="flex flex-wrap justify-center items-center gap-4 mr-auto">
+            <div className="flex flex-wrap gap-4 mr-auto">
                 {projects.map((project) => (
                     <div key={project.title} className="hover:-translate-y-0.5 transition duration-300 max-w-75 border border-gray-200 rounded-xl">
-                        <img
+                        {/* <img
                             className="rounded-t-xl h-42 object-fit"
                             src={project.image}
                             alt={project.title}
                             width={300}
                             height={170}
-                        />
+                        /> */}
                         <div className="p-4">
-                            <h3 className="text-base font-medium">
-                                {project.title}
-                            </h3>
-                            <p className="text-gray-500 mt-1">
-                                {project.description}
-                            </p>
+                            <a href="https://www.github.com">
+                                <h3 className="text-base font-medium">
+                                    {project.title}
+                                </h3>
+                                <p className="text-gray-500 mt-1">
+                                    {project.description}
+                                </p>
+                            </a>
                         </div>
                     </div>
                 ))}
